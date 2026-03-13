@@ -34,7 +34,7 @@ Page {
                     id: themeSwitch
                     checked: AppTheme.darkMode
                     onCheckedChanged: {
-                        // Пишем значение в глобальный синглтон
+                        // Снимаем комментарий с этой строки, чтобы переключатель менял тему:
                         AppTheme.darkMode = checked
                     }
                 }

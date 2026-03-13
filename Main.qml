@@ -10,16 +10,15 @@ ApplicationWindow {
     title: "Tuwunel Admin Dashboard"
 
     // Цветовая схема глобально
-    palette.window: "#121212"
-    palette.windowText: "white"
-    palette.base: "#1e1e1e"
-    palette.alternateBase: "#2c313a"
-    palette.text: "white"
-    palette.button: "#32373e"
-    palette.buttonText: "white"
-    palette.highlight: "#4CAF50"
+    palette.window: AppTheme.bg
+    palette.windowText: AppTheme.text
+    palette.base: AppTheme.surface
+    palette.alternateBase: AppTheme.card
+    palette.text: AppTheme.text
+    palette.button: AppTheme.card
+    palette.buttonText: AppTheme.text
+    palette.highlight: AppTheme.accent
     palette.highlightedText: "white"
-
     // ЕДИНСТВЕННЫЙ контейнер навигации
     StackView {
         id: stackView

@@ -1,7 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import qMonitoringApp
+
+
 Page {
     id: root
     property var stackView
@@ -70,7 +71,7 @@ Page {
                     subTitle: "6.5 / 8 GB"
                     accentColor: "#2196F3"
                     Layout.fillWidth: true
-                    onClicked: root.stackView.push("ProcessView.qml")
+                    onClicked: root.stackView.push("RAMView.qml")
                 }
 
                 MetricCard {
@@ -80,7 +81,7 @@ Page {
                     accentColor: "#9C27B0" // Фиолетовый для GPU
                     Layout.fillWidth: true
                     visible: true // Можно скрывать, если нет GPU
-                    onClicked: root.stackView.push("ProcessView.qml")
+                    onClicked: root.stackView.push("GPUView.qml")
                 }
 
                 MetricCard {
@@ -89,7 +90,7 @@ Page {
                     subTitle: "30 Mbit/s"
                     accentColor: "#FF9800"
                     Layout.fillWidth: true
-                    onClicked: root.stackView.push("ProcessView.qml")
+                    onClicked: root.stackView.push("NetworkView.qml")
                 }
 
 
@@ -115,7 +116,7 @@ Page {
                     totalSpace: "256 GB"
                     healthStatus: "Healthy"
                     Layout.fillWidth: true
-                    // onClicked: root.stackView.push("StorageManagerPage.qml")
+                    onClicked: stackView.push("StorageManagerPage.qml")
 
                 }
 
@@ -125,11 +126,16 @@ Page {
                     totalSpace: "1 TB"
                     healthStatus: "Warning" // Почти полный диск
                     Layout.fillWidth: true
-                    // onClicked: root.stackView.push("StorageManagerPage.qml")
+                    onClicked: stackView.push("StorageManagerPage.qml")
                 }
             }
 
             Item { Layout.fillHeight: true } // Push content up
         }
     }
+    property real cpuLoad: 0.45
+    property real ramLoad: 0.82
+    property real gpuLoad: 0.10
+    property real networkLoad: 0.30
+    property bool gpuAvailable: true
 }

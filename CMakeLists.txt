@@ -12,6 +12,17 @@ qt_add_executable(appqMonitoringApp
     main.cpp
 )
 
+# --- 1. Объявите файлы синглтонов ---
+set(qml_singletons
+    AppTheme.qml
+    # Если есть другие, добавьте их сюда, например: Settings.qml
+)
+
+# --- 2. Установите свойство синглтона (ОБЯЗАТЕЛЬНО ДО qt_add_qml_module) ---
+set_source_files_properties(${qml_singletons}
+    PROPERTIES QT_QML_SINGLETON_TYPE TRUE
+)
+
 qt_add_qml_module(appqMonitoringApp
     URI qMonitoringApp
     QML_FILES
@@ -23,6 +34,11 @@ qt_add_qml_module(appqMonitoringApp
         QML_FILES SettingsPage.qml
         QML_FILES ProcessView.qml
         QML_FILES StorageManager.qml
+        QML_FILES CPUView.qml
+        QML_FILES RAMView.qml
+        QML_FILES GPUView.qml
+        QML_FILES NetworkView.qml
+
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
