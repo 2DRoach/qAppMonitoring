@@ -47,7 +47,7 @@ Page {
             // GridLayout сам растянет карточки, если место позволит
             // На телефоне будет 1 колонка, на планшете 2 или 3
             GridLayout {
-                columns: 2 // Можно привязать к ширине экрана динамически
+                columns: 2
                 Layout.fillWidth: true
                 rowSpacing: 15
                 columnSpacing: 15
@@ -58,12 +58,11 @@ Page {
                     subTitle: "2.4 GHz"
                     accentColor: "#4CAF50"
                     Layout.fillWidth: true
-                    MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: root.stackView.push("ProcessView.qml")
-                        }
+
+                    // Подключаемся к сигналу clicked
+                    onClicked: root.stackView.push("ProcessView.qml")
                 }
+
 
                 MetricCard {
                     title: "RAM"
@@ -71,11 +70,7 @@ Page {
                     subTitle: "6.5 / 8 GB"
                     accentColor: "#2196F3"
                     Layout.fillWidth: true
-                    MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: root.stackView.push("ProcessView.qml")
-                        }
+                    onClicked: root.stackView.push("ProcessView.qml")
                 }
 
                 MetricCard {
@@ -85,11 +80,7 @@ Page {
                     accentColor: "#9C27B0" // Фиолетовый для GPU
                     Layout.fillWidth: true
                     visible: true // Можно скрывать, если нет GPU
-                    MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: root.stackView.push("ProcessView.qml")
-                        }
+                    onClicked: root.stackView.push("ProcessView.qml")
                 }
 
                 MetricCard {
@@ -98,11 +89,7 @@ Page {
                     subTitle: "30 Mbit/s"
                     accentColor: "#FF9800"
                     Layout.fillWidth: true
-                    MouseArea {
-                            anchors.fill: parent
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: root.stackView.push("ProcessView.qml")
-                        }
+                    onClicked: root.stackView.push("ProcessView.qml")
                 }
 
 
@@ -128,10 +115,8 @@ Page {
                     totalSpace: "256 GB"
                     healthStatus: "Healthy"
                     Layout.fillWidth: true
-                    MouseArea {
-                            anchors.fill: parent
-                            onClicked: root.stackView.push("StorageManagerPage.qml")
-                        }
+                    // onClicked: root.stackView.push("StorageManagerPage.qml")
+
                 }
 
                 DiskDelegate {
@@ -140,10 +125,7 @@ Page {
                     totalSpace: "1 TB"
                     healthStatus: "Warning" // Почти полный диск
                     Layout.fillWidth: true
-                    MouseArea {
-                            anchors.fill: parent
-                            onClicked: root.stackView.push("StorageManagerPage.qml")
-                        }
+                    // onClicked: root.stackView.push("StorageManagerPage.qml")
                 }
             }
 

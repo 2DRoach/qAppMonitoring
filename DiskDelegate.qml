@@ -1,75 +1,89 @@
+// DiskDelegate.qml
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
 Item {
     id: delegate
-    implicitHeight: 80
+    implicitHeight: 85
     implicitWidth: parent ? parent.width : 400
 
-    // Mock данные (потом придут из C++ модели)
     property string mountPoint: "/var/lib/matrix"
     property double usedSpace: 0.75
     property string totalSpace: "500 GB"
     property string healthStatus: "Healthy"
 
+    signal clicked()
+
     Rectangle {
         anchors.fill: parent
         anchors.margins: 5
-        radius: 8
-        color: "#32373e"
+        radius: 12
+        color: AppTheme.card
+        border.width: mouseAreaDisk.containsMouse ? 1 : 0
+        border.color: AppTheme.accent
+
+        // Анимация цвета и границ
+        Behavior on color { ColorAnimation { duration: 250 } }
 
         RowLayout {
             anchors.fill: parent
             anchors.margins: 15
             spacing: 15
 
-            // Иконка диска (простой Rectangle вместо картинки для прототипа)
             Rectangle {
-                width: 40; height: 40; radius: 20
-                color: "#444"
-                Text { text: "💾"; anchors.centerIn: parent; font.pixelSize: 20 }
+                width: 45; height: 45; radius: 22
+                color: AppTheme.surface
+                // Иконка
+                Text {
+                    text: delegate.healthStatus === "Warning" ? "⚠️" : "💾"
+                    anchors.centerIn: parent
+                    font.pixelSize: 20
+                }
             }
 
             ColumnLayout {
                 Layout.fillWidth: true
-                spacing: 4
+                spacing: 5
 
                 Text {
                     text: delegate.mountPoint
-                    color: "white"
+                    color: AppTheme.text
                     font.bold: true
                     font.pixelSize: 16
+                    elide: Text.ElideRight
+                    Layout.fillWidth: true
                 }
 
-                // Полоска использования
                 ProgressBar {
                     from: 0; to: 1
                     value: delegate.usedSpace
                     Layout.fillWidth: true
-                    implicitHeight: 4
+                    implicitHeight: 5
 
-                    background: Rectangle { color: "#222"; radius: 2 }
+                    background: Rectangle { color: AppTheme.surface; radius: 2.5 }
                     contentItem: Rectangle {
-                         implicitHeight: 4
+                         implicitHeight: 5
                          width: parent.visualPosition * parent.width
-                         radius: 2
-                         color: delegate.usedSpace > 0.9 ? "#f44336" : "#2196F3" // Красный если > 90%
+                         radius: 2.5
+                         color: delegate.usedSpace > 0.9 ? AppTheme.danger : "#2196F3"
+                         Behavior on color { ColorAnimation { duration: 200 } }
                     }
                 }
 
                 Text {
                     text: qsTr("%1 used of %2").arg(Math.round(delegate.usedSpace * 100) + "%").arg(delegate.totalSpace)
                     font.pixelSize: 12
-                    color: "#888"
+                    color: AppTheme.textSecondary
                 }
             }
 
-            // Статус здоровья
             Rectangle {
-                width: statusText.implicitWidth + 20; height: 25
+                width: statusText.implicitWidth + 16; height: 24
                 radius: 12
+                // Анимация цвета статуса
                 color: delegate.healthStatus === "Healthy" ? "#1b5e20" : "#b71c1c"
+                Behavior on color { ColorAnimation { duration: 300 } }
 
                 Text {
                     id: statusText
@@ -80,6 +94,14 @@ Item {
                     font.bold: true
                 }
             }
+        }
+
+        MouseArea {
+            id: mouseAreaDisk
+            anchors.fill: parent
+            hoverEnabled: true
+            cursorShape: Qt.PointingHandCursor
+            onClicked: delegate.clicked()
         }
     }
 }
