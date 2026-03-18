@@ -8,7 +8,7 @@ Page {
     id: root
     property var stackView
 
-    background: Rectangle { color: AppTheme.bg }
+    // background: Rectangle { color: AppTheme.bg }
 
     header: ToolBar {
         background: Rectangle { color: AppTheme.surface }
@@ -16,7 +16,7 @@ Page {
             anchors.fill: parent
             ToolButton {
                 text: "←"
-                onClicked: stackView.pop()
+                onClicked: StackView.view.pop()
                 contentItem: Label {
                     text: parent.text
                     font.pixelSize: 20

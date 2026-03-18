@@ -81,7 +81,7 @@ Page {
                     accentColor: "#9C27B0" // Фиолетовый для GPU
                     Layout.fillWidth: true
                     visible: true // Можно скрывать, если нет GPU
-                    onClicked: root.stackView.push("GPUView.qml")
+                    onClicked: root.stackView.push("GPUView.qml", {stackView: root.stackView})
                 }
 
                 MetricCard {
@@ -116,7 +116,7 @@ Page {
                     totalSpace: "256 GB"
                     healthStatus: "Healthy"
                     Layout.fillWidth: true
-                    onClicked: stackView.push("StorageManagerPage.qml")
+                    onClicked: stackView.push("StorageManager.qml")
 
                 }
 
@@ -126,7 +126,7 @@ Page {
                     totalSpace: "1 TB"
                     healthStatus: "Warning" // Почти полный диск
                     Layout.fillWidth: true
-                    onClicked: stackView.push("StorageManagerPage.qml")
+                    onClicked: stackView.push("StorageManager.qml")
                 }
             }
 

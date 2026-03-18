@@ -6,8 +6,6 @@ import qMonitoringApp
 
 Page {
     id: root
-    property var stackView
-
     title: "Сеть"
     background: Rectangle { color: AppTheme.bg }
 
@@ -18,8 +16,15 @@ Page {
             ToolButton {
                 text: "←"
                 font.pixelSize: 20
-                color: AppTheme.text
-                onClicked: stackView.pop()
+                // ИСПРАВЛЕНО: Используем StackView.view
+                onClicked: root.StackView.view.pop()
+                contentItem: Label {
+                    text: parent.text
+                    font.pixelSize: parent.font.pixelSize
+                    color: AppTheme.text
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
             }
             Label {
                 text: root.title
@@ -31,18 +36,22 @@ Page {
     }
 
     ScrollView {
+        id: scrollView // ID нужен для привязки ширины
         anchors.fill: parent
         clip: true
+        ScrollBar.horizontal.policy: ScrollBar.AsNeeded
 
+        // ИСПРАВЛЕНО: Обернули всё в один ColumnLayout
         ColumnLayout {
-            width: parent.width
-            anchors.margins: 20
+            // Привязка ширины к ScrollView, чтобы контент растягивался
+            width: scrollView.availableWidth - 40
+            x: 20 // Отступ слева
             spacing: 20
 
             // === Статистика ===
             GridLayout {
-                columns: 2
                 Layout.fillWidth: true
+                columns: 2
                 rowSpacing: 15
                 columnSpacing: 15
 
@@ -60,6 +69,7 @@ Page {
                             text: "📤 Отправка"
                             color: AppTheme.textSecondary
                             font.pixelSize: 12
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
                         Label {
                             text: "1.2 GB"
@@ -84,6 +94,7 @@ Page {
                             text: "📥 Получение"
                             color: AppTheme.textSecondary
                             font.pixelSize: 12
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
                         Label {
                             text: "8.5 GB"
@@ -108,6 +119,7 @@ Page {
                             text: "⬆️ Скорость отправки"
                             color: AppTheme.textSecondary
                             font.pixelSize: 12
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
                         Label {
                             text: "5.2 Mbit/s"
@@ -132,6 +144,7 @@ Page {
                             text: "⬇️ Скорость получения"
                             color: AppTheme.textSecondary
                             font.pixelSize: 12
+                            anchors.horizontalCenter: parent.horizontalCenter
                         }
                         Label {
                             text: "25.8 Mbit/s"
@@ -149,55 +162,60 @@ Page {
                 color: AppTheme.textSecondary
                 font.pixelSize: 14
                 font.bold: true
+                Layout.topMargin: 10
             }
 
-            ListView {
+            // ИСПРАВЛЕНО: Заменили ListView на Column + Repeater
+            // Это убирает конфликт прокрутки и позволяет элементам растягиваться
+            Column {
                 Layout.fillWidth: true
-                Layout.fillHeight: true
-                clip: true
                 spacing: 8
-                model: ListModel {
-                    ListElement { name: "eth0"; ip: "192.168.1.100"; status: "active"; }
-                    ListElement { name: "wlan0"; ip: "192.168.1.105"; status: "active"; }
-                    ListElement { name: "docker0"; ip: "172.17.0.1"; status: "active"; }
-                }
 
-                delegate: Rectangle {
-                    width: parent.width
-                    height: 70
-                    color: AppTheme.card
-                    radius: 8
-                    clip: true
+                Repeater {
+                    model: ListModel {
+                        ListElement { name: "eth0"; ip: "192.168.1.100"; status: "active"; }
+                        ListElement { name: "wlan0"; ip: "192.168.1.105"; status: "active"; }
+                        ListElement { name: "docker0"; ip: "172.17.0.1"; status: "active"; }
+                    }
 
-                    RowLayout {
-                        anchors.fill: parent
-                        anchors.margins: 15
-                        spacing: 15
+                    delegate: Rectangle {
+                        width: parent.width // Растягивается на всю ширину
+                        height: 70
+                        color: AppTheme.card
+                        radius: 8
+                        clip: true
 
-                        Label {
-                            text: model.name
-                            color: AppTheme.text
-                            font.pixelSize: 16
-                            font.bold: true
-                            Layout.fillWidth: true
-                        }
+                        RowLayout {
+                            anchors.fill: parent
+                            anchors.margins: 15
+                            spacing: 15
 
-                        Label {
-                            text: model.ip
-                            color: AppTheme.textSecondary
-                            font.pixelSize: 12
-                        }
+                            Label {
+                                text: model.name
+                                color: AppTheme.text
+                                font.pixelSize: 16
+                                font.bold: true
+                                Layout.fillWidth: true
+                            }
 
-                        Rectangle {
-                            width: 10
-                            height: 10
-                            radius: 5
-                            color: model.status === "active" ? "#4CAF50" : "#F44336"
+                            Label {
+                                text: model.ip
+                                color: AppTheme.textSecondary
+                                font.pixelSize: 12
+                            }
+
+                            Rectangle {
+                                width: 10
+                                height: 10
+                                radius: 5
+                                color: model.status === "active" ? "#4CAF50" : "#F44336"
+                            }
                         }
                     }
                 }
             }
 
+            // Распорка снизу
             Item { Layout.fillHeight: true }
         }
     }
