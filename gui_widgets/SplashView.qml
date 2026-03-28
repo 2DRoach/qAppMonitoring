@@ -2,7 +2,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-// import com.tuwunel.settings 1.0
+import qMonitoringApp
 
 Rectangle {
     id: root
@@ -34,6 +34,14 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: 40
             palette { highlight: AppTheme.accent }
+        }
+    }
+
+    Timer {
+        interval: 2000
+        running: true
+        onTriggered: {
+            Router.replace(Router.pageAddServer)
         }
     }
 }

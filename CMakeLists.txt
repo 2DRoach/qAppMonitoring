@@ -14,6 +14,7 @@ qt_add_executable(appqMonitoringApp
 
 set(qml_singletons
         gui_widgets/AppTheme.qml
+        gui_widgets/Router.qml
 )
 
 set_source_files_properties(${qml_singletons}
@@ -39,6 +40,8 @@ qt_add_qml_module(appqMonitoringApp
         QML_FILES gui_widgets/AddServerPage.qml
         QML_FILES gui_widgets/LoginPage.qml
         QML_FILES gui_widgets/AppTextField.qml
+        QML_FILES gui_widgets/Router.qml
+
 
 )
 

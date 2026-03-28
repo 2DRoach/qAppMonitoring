@@ -16,7 +16,7 @@ Page {
             anchors.fill: parent
             ToolButton {
                 text: "←"
-                onClicked: root.StackView.view.pop()
+                onClicked: Router.pop()
                 contentItem: Label { text: parent.text; font.pixelSize: 20; color: AppTheme.text }
             }
             Label {

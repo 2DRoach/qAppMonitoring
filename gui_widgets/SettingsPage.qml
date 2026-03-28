@@ -10,7 +10,7 @@ Page {
         background: Rectangle { color: AppTheme.surface }
         RowLayout {
             anchors.fill: parent
-            ToolButton { text: "←"; onClicked: root.StackView.view.pop(); font.bold: true }
+            ToolButton { text: "←"; onClicked: Router.pop(); font.bold: true }
             Label { text: "Settings"; font.bold: true; color: AppTheme.text; Layout.fillWidth: true }
         }
     }

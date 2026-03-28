@@ -1,6 +1,6 @@
-// Main.qml
 import QtQuick
 import QtQuick.Controls
+
 
 ApplicationWindow {
     id: window
@@ -8,39 +8,24 @@ ApplicationWindow {
     width: 400
     height: 800
     title: "Tuwunel Monitor"
-
-    // Глобальная тема (как мы обсуждали)
-    color: AppTheme.bg
+    color: AppTheme.bg // AppTheme тоже берется из модуля qMonitoringApp
 
     // === НАВИГАЦИОННЫЙ СТЕК ===
-    // Это главный контейнер, который показывает экраны один поверх другого
     StackView {
         id: stackView
         anchors.fill: parent
 
-        // Экран, который покажется при запуске
-        initialItem: SplashView {
-            // ВРЕМЕННАЯ ЛОГИКА ДЛЯ ТЕСТИРОВАНИЯ GUI:
-            // Таймер срабатывает через 2 секунды и меняет экран.
-            // Позже мы заменим это на сигнал от C++.
+        // Регистрируем стек в Роутере при запуске
+        Component.onCompleted: Router.stackView = stackView
 
-            Timer {
-                interval: 2000
-                running: true
-                onTriggered: {
-                    // Для теста можем переключать экраны вручную:
-                    stackView.replace("AddServerPage.qml")
-                    // stackView.replace("LoginPage.qml")
-                    // stackView.replace("DashBoardPage.qml")
-                }
-            }
-        }
+        // Начальный экран
+        // initialItem: "SplashView.qml"
+        initialItem: "SplashView.qml"
     }
 
     // === ГЛОБАЛЬНЫЙ КОНТЕКСТ ДЛЯ МОКОВ ===
-    // Чтобы виджеты работали без C++, передадим им фейковые данные прямо здесь.
-    // Потом мы перенесем эти данные в C++ модели.
-
+    // Внимание: этот объект виден только внутри Main.qml.
+    // Если вы хотите использовать mockData в Dashboard, лучше вынести их в отдельный Singleton.
     QtObject {
         id: mockData
 
@@ -57,7 +42,6 @@ ApplicationWindow {
             url: "http://192.168.1.50:8000"
         })
 
-        // Имитация списка процессов
         property var processList: [
             { pid: 101, name: "python3", cpu: 12.5, memory: 1.2 },
             { pid: 102, name: "nginx", cpu: 0.5, memory: 0.4 },

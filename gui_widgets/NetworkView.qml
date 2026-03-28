@@ -17,7 +17,7 @@ Page {
                 text: "←"
                 font.pixelSize: 20
                 // ИСПРАВЛЕНО: Используем StackView.view
-                onClicked: root.StackView.view.pop()
+                onClicked: Router.pop()
                 contentItem: Label {
                     text: parent.text
                     font.pixelSize: parent.font.pixelSize

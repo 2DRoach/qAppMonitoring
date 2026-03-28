@@ -6,7 +6,6 @@ import QtQuick.Layouts
 
 Page {
     id: root
-    property var stackView
     background: Rectangle { color: AppTheme.bg } // Матовый черный фон
     implicitWidth: 0
     implicitHeight: 0
@@ -21,9 +20,10 @@ Page {
                 font.bold: true
                 color: AppTheme.text
                 leftPadding: 20
+
             }
             Item { Layout.fillWidth: true } // Spacer
-            ToolButton { text: "⚙️"; onClicked: root.stackView.push("SettingsPage.qml") }
+            ToolButton { text: "⚙️"; onClicked: Router.push(Router.pageSettings) }
         }
     }
 
@@ -34,8 +34,15 @@ Page {
         contentWidth: availableWidth
 
         ColumnLayout {
-            width: scrollView.width
-            anchors.margins: 20
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+
+            anchors.leftMargin: 20
+            anchors.rightMargin: 20
+            anchors.topMargin: 24
+            anchors.bottomMargin: 24
+
             spacing: 20
 
             // === СЕКЦИЯ: Нагрузка ===
@@ -62,7 +69,7 @@ Page {
                     Layout.fillWidth: true
 
                     // Подключаемся к сигналу clicked
-                    onClicked: root.stackView.push("ProcessView.qml")
+                    onClicked: Router.push(Router.pageCPU)
                 }
 
 
@@ -72,7 +79,7 @@ Page {
                     subTitle: "6.5 / 8 GB"
                     accentColor: "#2196F3"
                     Layout.fillWidth: true
-                    onClicked: root.stackView.push("RAMView.qml")
+                    onClicked: Router.push(Router.pageRAM)
                 }
 
                 MetricCard {
@@ -82,7 +89,7 @@ Page {
                     accentColor: "#9C27B0" // Фиолетовый для GPU
                     Layout.fillWidth: true
                     visible: true // Можно скрывать, если нет GPU
-                    onClicked: root.stackView.push("GPUView.qml", {stackView: root.stackView})
+                    onClicked: Router.push(Router.pageGPU)
                 }
 
                 MetricCard {
@@ -91,7 +98,7 @@ Page {
                     subTitle: "30 Mbit/s"
                     accentColor: "#FF9800"
                     Layout.fillWidth: true
-                    onClicked: root.stackView.push("NetworkView.qml")
+                    onClicked: Router.push(Router.pageNetwork)
                 }
 
 
@@ -117,8 +124,7 @@ Page {
                     totalSpace: "256 GB"
                     healthStatus: "Healthy"
                     Layout.fillWidth: true
-                    onClicked: stackView.push("StorageManager.qml")
-
+                    onClicked: Router.push(Router.pageStorage)
                 }
 
                 DiskDelegate {
@@ -127,7 +133,7 @@ Page {
                     totalSpace: "1 TB"
                     healthStatus: "Warning" // Почти полный диск
                     Layout.fillWidth: true
-                    onClicked: stackView.push("StorageManager.qml")
+                    onClicked: Router.push(Router.pageStorage)
                 }
             }
 

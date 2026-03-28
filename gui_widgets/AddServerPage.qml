@@ -80,33 +80,52 @@ Page {
                        }
                    }
 
+               Timer {
+                           id: checkTimer
+                           interval: 1500 // 1.5 секунды "проверки"
+                           repeat: false
+                           onTriggered: {
+                               // 1. Сбрасываем состояние кнопки (хотя страница сейчас закроется)
+                               root.isChecking = false
 
+                               console.log("Stub: Server check successful")
+
+                               // 2. Выполняем переход.
+                               // Используем replace, так как после добавления сервера
+                               // пользователь не должен вернуться на экран "Добавить сервер".
+                               Router.replace(Router.pageLogin)
+
+                               // Если вы хотите перейти сразу в дашборд (пропустив логин):
+                               // Router.replace(Router.Pages.Dashboard)
+                           }
+                   }
 
                Button {
-                   text: root.isChecking ? "Проверка..." : "Добавить"
-                   Layout.fillWidth: true
-                   Layout.topMargin: 10
-                   enabled: !root.isChecking && nameInput.text !== "" && urlInput.text !== ""
+                       text: root.isChecking ? "Проверка..." : "Добавить"
+                       Layout.fillWidth: true
+                       Layout.topMargin: 10
+                       enabled: !root.isChecking && nameInput.text !== "" && urlInput.text !== ""
 
-                   background: Rectangle {
-                       color: parent.enabled ? AppTheme.accent : AppTheme.textSecondary
-                       radius: 10
-                   }
-                   contentItem: Text {
-                       text: parent.text
-                       color: "white"
-                       font.bold: true
-                       horizontalAlignment: Text.AlignHCenter
-                       verticalAlignment: Text.AlignVCenter
-                   }
+                       background: Rectangle {
+                           color: parent.enabled ? AppTheme.accent : AppTheme.textSecondary
+                           radius: 10
+                       }
+                       contentItem: Text {
+                           text: parent.text
+                           color: "white"
+                           font.bold: true
+                           horizontalAlignment: Text.AlignHCenter
+                           verticalAlignment: Text.AlignVCenter
+                       }
 
-                   onClicked: {
-                       root.isChecking = true;
-                       // Логика будет позже
-                       console.log("Add server clicked");
-                       // ServerManager.addServer(nameInput.text, urlInput.text);
+                       onClicked: {
+                           root.isChecking = true;
+                           console.log("Add server clicked (Stub started)");
+
+                           // ЗАПУСК ТАЙМЕРА
+                           checkTimer.start();
+                       }
                    }
-               }
 
                // Распорка, чтобы можно было прокрутить выше клавиатуры
                Item { Layout.preferredHeight: 100 }

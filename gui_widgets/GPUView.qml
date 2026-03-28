@@ -18,7 +18,7 @@ Page {
             ToolButton {
                 text: "←"
                 font.pixelSize: 20
-                onClicked: root.stackView.pop()
+                onClicked: Router.pop()
                 contentItem: Label {
                     text: parent.text
                     font.pixelSize: parent.font.pixelSize

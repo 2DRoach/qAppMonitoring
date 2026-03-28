@@ -21,7 +21,7 @@ Page {
                 ToolButton {
                     text: "←"
                     font.bold: true
-                    onClicked: root.StackView.view.pop()
+                    onClicked: Router.pop()
                 }
                 Label {
                     text: "Process Monitor"
