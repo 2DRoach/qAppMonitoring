@@ -85,18 +85,9 @@ Page {
                            interval: 1500 // 1.5 секунды "проверки"
                            repeat: false
                            onTriggered: {
-                               // 1. Сбрасываем состояние кнопки (хотя страница сейчас закроется)
                                root.isChecking = false
-
                                console.log("Stub: Server check successful")
-
-                               // 2. Выполняем переход.
-                               // Используем replace, так как после добавления сервера
-                               // пользователь не должен вернуться на экран "Добавить сервер".
                                Router.replace(Router.pageLogin)
-
-                               // Если вы хотите перейти сразу в дашборд (пропустив логин):
-                               // Router.replace(Router.Pages.Dashboard)
                            }
                    }
 

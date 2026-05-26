@@ -20,16 +20,16 @@ QtObject {
     readonly property string pageSettings: "Settings"
 
     readonly property var pagesMap: ({
-        "Splash": "SplashView.qml",
-        "AddServer": "AddServerPage.qml",
-        "Login": "LoginPage.qml",
-        "Dashboard": "DashBoardPage.qml",
-        "CPU": "CPUView.qml",
-        "GPU": "GPUView.qml",
-        "RAM": "RAMView.qml",
-        "Network": "NetworkView.qml",
-        "Storage": "StorageManager.qml",
-        "Settings": "SettingsPage.qml"
+        "Splash": "pages/SplashView.qml",
+        "AddServer": "pages/AddServerPage.qml",
+        "Login": "pages/LoginPage.qml",
+        "Dashboard": "pages/DashBoardPage.qml",
+        "CPU": "pages/CPUView.qml",
+        "GPU": "pages/GPUView.qml",
+        "RAM": "pages/RAMView.qml",
+        "Network": "pages/NetworkView.qml",
+        "Storage": "pages/StorageManager.qml",
+        "Settings": "pages/SettingsPage.qml"
     })
 
     // === Функции навигации ===

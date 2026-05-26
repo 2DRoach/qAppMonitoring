@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-
+// import "./AppTheme.qml"
 
 ApplicationWindow {
     id: window
@@ -8,24 +8,17 @@ ApplicationWindow {
     width: 400
     height: 800
     title: "Tuwunel Monitor"
-    color: AppTheme.bg // AppTheme тоже берется из модуля qMonitoringApp
+    color: AppTheme.bg
 
     // === НАВИГАЦИОННЫЙ СТЕК ===
     StackView {
         id: stackView
         anchors.fill: parent
-
-        // Регистрируем стек в Роутере при запуске
         Component.onCompleted: Router.stackView = stackView
-
-        // Начальный экран
-        // initialItem: "SplashView.qml"
-        initialItem: "SplashView.qml"
+        initialItem: "pages/SplashView.qml"
     }
 
-    // === ГЛОБАЛЬНЫЙ КОНТЕКСТ ДЛЯ МОКОВ ===
-    // Внимание: этот объект виден только внутри Main.qml.
-    // Если вы хотите использовать mockData в Dashboard, лучше вынести их в отдельный Singleton.
+
     QtObject {
         id: mockData
 

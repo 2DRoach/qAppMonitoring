@@ -2,7 +2,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-
+import "../DiskDelegate.qml"
 
 Page {
     id: root
@@ -53,8 +53,6 @@ Page {
                 font.bold: true
             }
 
-            // GridLayout сам растянет карточки, если место позволит
-            // На телефоне будет 1 колонка, на планшете 2 или 3
             GridLayout {
                 columns: 2
                 Layout.fillWidth: true
