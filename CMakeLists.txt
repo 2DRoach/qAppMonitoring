@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick QuickControls2)
 
-qt_standard_project_setup(REQUIRES 6.10)
+qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(appqMonitoringApp
     main.cpp
@@ -25,22 +25,25 @@ qt_add_qml_module(appqMonitoringApp
     URI qMonitoringApp
     QML_FILES
         gui_widgets/Main.qml
-        QML_FILES gui_widgets/DashBoardPage.qml
-        QML_FILES gui_widgets/DiskDelegate.qml
-        QML_FILES gui_widgets/MetricCard.qml
-        QML_FILES gui_widgets/AppTheme.qml
-        QML_FILES gui_widgets/SettingsPage.qml
-        QML_FILES gui_widgets/ProcessView.qml
-        QML_FILES gui_widgets/StorageManager.qml
-        QML_FILES gui_widgets/CPUView.qml
-        QML_FILES gui_widgets/RAMView.qml
-        QML_FILES gui_widgets/GPUView.qml
-        QML_FILES gui_widgets/NetworkView.qml
-        QML_FILES gui_widgets/SplashView.qml
-        QML_FILES gui_widgets/AddServerPage.qml
-        QML_FILES gui_widgets/LoginPage.qml
-        QML_FILES gui_widgets/AppTextField.qml
-        QML_FILES gui_widgets/Router.qml
+
+        gui_widgets/pages/DashBoardPage.qml
+        gui_widgets/pages/SettingsPage.qml
+        gui_widgets/pages/AddServerPage.qml
+        gui_widgets/pages/LoginPage.qml
+        gui_widgets/pages/RAMView.qml
+        gui_widgets/pages/MetricCard.qml
+        gui_widgets/pages/NetworkView.qml
+        gui_widgets/pages/ProcessView.qml
+        gui_widgets/pages/SplashView.qml
+        gui_widgets/pages/GPUView.qml
+        gui_widgets/pages/StorageManager.qml
+        gui_widgets/pages/CPUView.qml
+
+
+        gui_widgets/DiskDelegate.qml
+        gui_widgets/widgets/AppTextField.qml
+        gui_widgets/AppTheme.qml
+        gui_widgets/Router.qml
 
 
 )
