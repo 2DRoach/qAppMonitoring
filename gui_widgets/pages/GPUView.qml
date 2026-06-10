@@ -2,7 +2,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-// import qMonitoringApp
+import qMonitoringApp
 
 Page {
     id: root

@@ -2,13 +2,13 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-// import qMonitoringApp
+import qMonitoringApp
 
 Page {
     id: root
     property var stackView
 
-    // background: Rectangle { color: AppTheme.bg }
+    background: Rectangle { color: AppTheme.bg }
 
     header: ToolBar {
         background: Rectangle { color: AppTheme.surface }
