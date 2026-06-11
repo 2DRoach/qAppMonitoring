@@ -4,12 +4,12 @@ project(qMonitoringApp VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick QuickControls2)
+find_package(Qt6 REQUIRED COMPONENTS Quick QuickControls2 Network)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
 qt_add_executable(appqMonitoringApp
-    main.cpp
+    src/main.cpp
 )
 
 set(qml_singletons
@@ -19,6 +19,13 @@ set(qml_singletons
 
 set_source_files_properties(${qml_singletons}
     PROPERTIES QT_QML_SINGLETON_TYPE TRUE
+)
+
+target_include_directories(appqMonitoringApp PRIVATE
+    appqMonitoringApp PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/NetworkManager
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/
 )
 
 qt_add_qml_module(appqMonitoringApp
@@ -39,14 +46,24 @@ qt_add_qml_module(appqMonitoringApp
         gui_widgets/pages/StorageManager.qml
         gui_widgets/pages/CPUView.qml
 
-
         gui_widgets/DiskDelegate.qml
         gui_widgets/widgets/AppTextField.qml
         gui_widgets/AppTheme.qml
         gui_widgets/Router.qml
+    SOURCES
+        src/core/NetworkManager/authManager.h src/core/NetworkManager/authManager.cpp
+        src/core/NetworkManager/networkDispatch.h src/core/NetworkManager/networkDispatch.cpp
 
+        src/core/ApiManager/apiManager.h src/core/ApiManager/apiManager.cpp
+        src/core/ApiManager/apiResult.cpp
 
+        src/core/tokenPayload.h
+        src/core/serializers.h src/core/serializers.cpp
+        src/core/jsonapiparser.h src/core/jsonapiparser.cpp
+        src/core/mainwindow.h src/core/mainwindow.cpp
+        src/core/ApiManager/apirouter.h
 )
+
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
@@ -61,7 +78,7 @@ set_target_properties(appqMonitoringApp PROPERTIES
 )
 
 target_link_libraries(appqMonitoringApp
-    PRIVATE Qt6::Quick Qt6::QuickControls2
+    PRIVATE Qt6::Quick Qt6::QuickControls2 Qt6::Network
 )
 
 set(ANDROID_PERMISSIONS
