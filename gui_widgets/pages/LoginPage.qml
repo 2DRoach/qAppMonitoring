@@ -2,6 +2,8 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import qMonitoringApp
+import "../widgets"
 
 Page {
     id: root
@@ -68,48 +70,32 @@ Page {
         }
 
         // Поле логина
-        TextField {
+        AppTextField {
             id: usernameInput
-            placeholderText: "Логин"
             Layout.fillWidth: true
+            backgroundColorNormal: AppTheme.surface
+            backgroundColorHover: AppTheme.card
+            placeholderText: "Логин"
             text: "admin"
-            leftPadding: AppTheme.spacingM
-            topPadding: AppTheme.spacingS
-            bottomPadding: AppTheme.spacingS
-
-            color: AppTheme.text
-            placeholderTextColor: AppTheme.textSecondary
-            font: AppTheme.fontBody
-
-            background: Rectangle {
-                color: AppTheme.surface
-                radius: AppTheme.radiusMedium
-                border.color: usernameInput.activeFocus ? AppTheme.accent : AppTheme.border
-                border.width: usernameInput.activeFocus ? 2 : 1
-            }
+            floatingPlaceholder: true
+            borderColorActive: AppTheme.accent
+            placeholderColorActive: "#6200EE"
+            textColor: AppTheme.text
         }
 
         // Поле пароля
-        TextField {
+        AppTextField {
             id: passwordInput
             placeholderText: "Пароль"
             echoMode: TextInput.Password
+            backgroundColorNormal: AppTheme.surface
+            backgroundColorHover: AppTheme.card
             Layout.fillWidth: true
             text: "123" // Для теста
-            leftPadding: AppTheme.spacingM
-            topPadding: AppTheme.spacingS
-            bottomPadding: AppTheme.spacingS
-
-            color: AppTheme.text
-            placeholderTextColor: AppTheme.textSecondary
-            font: AppTheme.fontBody
-
-            background: Rectangle {
-                color: AppTheme.surface
-                radius: AppTheme.radiusMedium
-                border.color: passwordInput.activeFocus ? AppTheme.accent : AppTheme.border
-                border.width: passwordInput.activeFocus ? 2 : 1
-            }
+            floatingPlaceholder: true
+            borderColorActive: AppTheme.accent
+            placeholderColorActive: "#6200EE"
+            textColor: AppTheme.text
         }
 
         // Текст ошибки

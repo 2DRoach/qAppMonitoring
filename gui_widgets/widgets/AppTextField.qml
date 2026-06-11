@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 
 Item {
     id: root
@@ -8,7 +8,7 @@ Item {
     property alias text: textInput.text
     property string placeholderText: "Placeholder"
     property alias validator: textInput.validator
-
+    property alias echoMode: textInput.echoMode
     property color textColor: "#000000"
     property color placeholderColorNormal: "#999999"
     property color placeholderColorActive: "#3d5afe"
@@ -146,7 +146,7 @@ Item {
         id: mouseArea
         anchors.fill: parent
         hoverEnabled: true
-        onPressed: {
+        onPressed: (mouse) => {
             textInput.forceActiveFocus()
             Qt.inputMethod.show()
             mouse.accepted = false

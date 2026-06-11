@@ -2,137 +2,104 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-
+import qMonitoringApp
+import "../widgets"
 Page {
     id: root
     background: Rectangle { color: AppTheme.bg }
-
     property bool isChecking: false
 
+    ColumnLayout {
+        id: columnLayout
+        // Привязываем к верху, а не к центру!
+        anchors.top: parent.top
+        anchors.topMargin: 40 // Отступ от шапки
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width * 0.85
+        spacing: 25 // Увеличим отступ между элементами
 
-        Flickable {
-           id: flickable
-           anchors.fill: parent
-           contentWidth: width
-           contentHeight: columnLayout.implicitHeight + 100 // Запас снизу
+        Label {
+            text: "Добавить сервер"
+            font.pixelSize: 24
+            font.bold: true
+            color: AppTheme.text
+            Layout.alignment: Qt.AlignHCenter
+        }
 
-           ColumnLayout {
-               id: columnLayout
+        Label {
+            text: "Введите адрес и имя для нового подключения"
+            color: AppTheme.textSecondary
+            Layout.alignment: Qt.AlignHCenter
+            wrapMode: Text.WordWrap
+            // ВАЖНО: Заставляем текст переноситься по ширине колонки
+            Layout.fillWidth: true
+            horizontalAlignment: Text.AlignHCenter
+        }
 
-               // Привязываем к верху, а не к центру!
-               anchors.top: parent.top
-               anchors.topMargin: 40 // Отступ от шапки
-               anchors.horizontalCenter: parent.horizontalCenter
+        AppTextField {
+            id: nameInput
+            Layout.fillWidth: true
+            backgroundColorNormal: AppTheme.surface
+            backgroundColorHover: AppTheme.card
+            placeholderText: "Имя Сервера"
+            floatingPlaceholder: true  // Включаем "андроидное" поведение
+            // Кастомизация цветов
+            borderColorActive: AppTheme.accent // Фиолетовый акцент
+            placeholderColorActive: "#6200EE"
+            textColor: AppTheme.text
+            onAccepted: urlInput.forceActiveFocus()
+        }
 
-               width: parent.width * 0.85
-               spacing: 25 // Увеличим отступ между элементами
+        AppTextField {
+            id: urlInput
+            Layout.fillWidth: true
+            backgroundColorNormal: AppTheme.surface
+            backgroundColorHover: AppTheme.card
+            placeholderText: "URL"
+            floatingPlaceholder: true
+            borderColorActive: AppTheme.accent
+            placeholderColorActive: "#6200EE"
+            textColor: AppTheme.text
+            // Теперь это свойство доступно
+            validator: RegularExpressionValidator {
+                regularExpression: /[a-zA-Z0-9.:\/\-]+/
+            }
+        }
 
-               Label {
-                   text: "Добавить сервер"
-                   font.pixelSize: 24
-                   font.bold: true
-                   color: AppTheme.text
-                   Layout.alignment: Qt.AlignHCenter
-               }
+        Timer {
+            id: checkTimer
+            interval: 1500 // 1.5 секунды "проверки"
+            repeat: false
+            onTriggered: {
+                root.isChecking = false
+                console.log("Stub: Server check successful")
+                Router.replace(Router.pageLogin)
+            }
+        }
 
-               Label {
-                   text: "Введите адрес и имя для нового подключения"
-                   color: AppTheme.textSecondary
-                   Layout.alignment: Qt.AlignHCenter
-                   wrapMode: Text.WordWrap
+        Button {
+            text: root.isChecking ? "Проверка..." : "Добавить"
+            Layout.fillWidth: true
+            Layout.topMargin: 10
+            enabled: !root.isChecking && nameInput.text !== "" && urlInput.text !== ""
+            background: Rectangle {
+                color: parent.enabled ? AppTheme.accent : AppTheme.textSecondary
+                radius: 10
+            }
 
-                   // ВАЖНО: Заставляем текст переноситься по ширине колонки
-                   Layout.fillWidth: true
-                   horizontalAlignment: Text.AlignHCenter
-               }
+            contentItem: Text {
+                text: parent.text
+                color: "white"
+                font.bold: true
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
 
-
-                   AppTextField {
-                        id: nameInput
-                        Layout.fillWidth: true
-                        backgroundColorNormal: AppTheme.surface
-                        backgroundColorHover: AppTheme.card
-                        placeholderText: "Имя Сервера"
-                        floatingPlaceholder: true  // Включаем "андроидное" поведение
-
-                        // Кастомизация цветов
-                        borderColorActive: AppTheme.accent // Фиолетовый акцент
-                        placeholderColorActive: "#6200EE"
-                        textColor: AppTheme.text
-                        onAccepted: urlInput.forceActiveFocus()
-                   }
-
-
-
-                   AppTextField {
-                       id: urlInput
-                       Layout.fillWidth: true
-                       backgroundColorNormal: AppTheme.surface
-                       backgroundColorHover: AppTheme.card
-                       placeholderText: "URL"
-                       floatingPlaceholder: true
-                       borderColorActive: AppTheme.accent
-                       placeholderColorActive: "#6200EE"
-                       textColor: AppTheme.text
-                       // Теперь это свойство доступно
-                       validator: RegularExpressionValidator {
-                            regularExpression: /[a-zA-Z0-9.:\/\-]+/
-                       }
-                   }
-
-               Timer {
-                           id: checkTimer
-                           interval: 1500 // 1.5 секунды "проверки"
-                           repeat: false
-                           onTriggered: {
-                               root.isChecking = false
-                               console.log("Stub: Server check successful")
-                               Router.replace(Router.pageLogin)
-                           }
-                   }
-
-               Button {
-                       text: root.isChecking ? "Проверка..." : "Добавить"
-                       Layout.fillWidth: true
-                       Layout.topMargin: 10
-                       enabled: !root.isChecking && nameInput.text !== "" && urlInput.text !== ""
-
-                       background: Rectangle {
-                           color: parent.enabled ? AppTheme.accent : AppTheme.textSecondary
-                           radius: 10
-                       }
-                       contentItem: Text {
-                           text: parent.text
-                           color: "white"
-                           font.bold: true
-                           horizontalAlignment: Text.AlignHCenter
-                           verticalAlignment: Text.AlignVCenter
-                       }
-
-                       onClicked: {
-                           root.isChecking = true;
-                           console.log("Add server clicked (Stub started)");
-
-                           // ЗАПУСК ТАЙМЕРА
-                           checkTimer.start();
-                       }
-                   }
-
-               // Распорка, чтобы можно было прокрутить выше клавиатуры
-               Item { Layout.preferredHeight: 100 }
-           }
-       }
-
-    // Закомментировано, так как ServerManager не реализован
-    /*
-    Connections {
-        target: ServerManager
-        function onServerAdded(success, message) {
-            root.isChecking = false;
-            if (!success) {
-                console.warn("Error adding server:", message);
+            onClicked: {
+                root.isChecking = true;
+                console.log("Add server clicked (Stub started)");
+                checkTimer.start();
             }
         }
     }
-    */
 }

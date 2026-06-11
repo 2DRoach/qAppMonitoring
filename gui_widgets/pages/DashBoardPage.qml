@@ -2,7 +2,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
-import "../DiskDelegate.qml"
+import qMonitoringApp
 
 Page {
     id: root
