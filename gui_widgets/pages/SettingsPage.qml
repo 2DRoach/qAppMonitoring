@@ -3,7 +3,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import qMonitoringApp
 
-
 Page {
     id: root
     background: Rectangle { color: AppTheme.bg } // Используем тему

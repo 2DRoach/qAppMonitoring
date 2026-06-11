@@ -5,6 +5,7 @@ import QtQuick.Layouts
 import qMonitoringApp
 import "../widgets"
 
+
 Page {
     id: root
     background: Rectangle { color: AppTheme.bg }

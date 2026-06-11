@@ -1,6 +1,10 @@
 import QtQuick
 import QtQuick.Controls
 import qMonitoringApp
+<<<<<<< HEAD
+=======
+// import "./AppTheme.qml"
+>>>>>>> 81d8a9bc438186266b6dfe6029f5bf3e8d635272
 
 ApplicationWindow {
     id: window

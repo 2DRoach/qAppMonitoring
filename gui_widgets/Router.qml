@@ -1,6 +1,8 @@
 pragma Singleton
 import QtQuick
 import QtQuick.Controls
+import qMonitoringApp
+
 QtObject {
     id: router
 
