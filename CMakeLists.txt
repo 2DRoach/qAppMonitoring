@@ -55,7 +55,7 @@ qt_add_qml_module(appqMonitoringApp
         src/core/NetworkManager/networkDispatch.h src/core/NetworkManager/networkDispatch.cpp
 
         src/core/ApiManager/apiManager.h src/core/ApiManager/apiManager.cpp
-        src/core/ApiManager/apiResult.cpp
+
 
         src/core/tokenPayload.h
         src/core/serializers.h src/core/serializers.cpp
@@ -69,7 +69,6 @@ qt_add_qml_module(appqMonitoringApp
 # If you are developing for iOS or macOS you should consider setting an
 # explicit, fixed bundle identifier manually though.
 set_target_properties(appqMonitoringApp PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appqMonitoringApp
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
@@ -81,10 +80,6 @@ target_link_libraries(appqMonitoringApp
     PRIVATE Qt6::Quick Qt6::QuickControls2 Qt6::Network
 )
 
-set(ANDROID_PERMISSIONS
-    android.permission.INTERNET
-    android.permission.ACCESS_NETWORK_STATE
-)
 
 set_property(TARGET appqMonitoringApp PROPERTY QT_ANDROID_PERMISSIONS "${ANDROID_PERMISSIONS}")
 
@@ -94,6 +89,4 @@ install(TARGETS appqMonitoringApp
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
-if (ANDROID)
-    include(/opt/android-sdk/android_openssl/CMakeLists.txt)
-endif()
+
