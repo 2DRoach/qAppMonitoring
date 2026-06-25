@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
     MainWindow w;
     QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("netManager", w.getNetworkDispatch());
+
 
     QObject::connect(
         &engine,

@@ -15,7 +15,9 @@ public:
     explicit TokenPayLoad(const QString& token,
                           const QString& tokenType,
                           qint64 expireAtSec)
-        : m_token(token), m_tokenType(tokenType), m_expireAtSec(expireAtSec) {}
+        : m_token(token)
+        , m_tokenType(tokenType)
+        , m_expireAtSec(expireAtSec) {}
 
     QString token() const noexcept { return m_token; }
     QString tokenType() const noexcept { return m_tokenType; }

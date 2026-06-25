@@ -13,23 +13,29 @@ NetworkDispatch::NetworkDispatch(QObject *parent) {
     m_manager = new QNetworkAccessManager(this);
 }
 
-// NetworkDispatch::NetworkDispatch(const QUrl& baseUrl, QObject *parent) {
-//     m_manager = new QNetworkAccessManager(this);
-// }
-
 QNetworkReply* NetworkDispatch::sendGet(const QString &path, const QUrlQuery& query, const QString& token) {
-    QUrl url = m_baseUrl.resolved(QUrl(path));
-    if (!query.isEmpty()) url.setQuery(query);
-    QNetworkRequest req(url);
-    return m_manager->get(req);
+    QNetworkRequest request(m_baseUrl.resolved(QUrl(path)));
+    applyHeaders(request, token);
+    if (!query.isEmpty()) {
+        QUrl url = request.url();
+        url.setQuery(query);
+        request.setUrl(url);
+    }
+    return m_manager->get(request);
 }
 
 QNetworkReply* NetworkDispatch::sendPostForm(const QString &path, const QByteArray &formData) {
-    QUrl url = m_baseUrl.resolved(QUrl(path));
-    QNetworkRequest request(url);
+    QNetworkRequest request(m_baseUrl.resolved(QUrl(path)));
+    applyHeaders(request, formData);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
     QNetworkReply* reply = m_manager->post(request, formData);
     return reply;
 }
 
-
+void NetworkDispatch::applyHeaders(QNetworkRequest &req, const QString &token) {
+    if (!token.isEmpty()) {
+        req.setRawHeader("Authorization", "Bearer " + token.toUtf8());
+    }
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    req.setRawHeader("Accept", "application/json");
+}
